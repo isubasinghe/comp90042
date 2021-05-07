@@ -1,0 +1,27 @@
+* Question Answering
+*Definition:* question answering ("QA") is the task of automatically determinging the answer for a natural language question.
+** 2 key approaches
+ - Information Retrieval based QA
+   - Given a query, search relevant documents.
+   - Find answers within these relevant documents.
+ - Knowledge based QA
+   - Builds semantic representation of the query.
+   - Query database of facts to find answers.
+** IR based QA
+*** IR-based Factoid QA: TREC-QA
+ 1) Use question to make a query for the IR engine.
+ 2) Find document, and passage within document
+ 3) Extract short answer string
+**** Question Processing
+ - Find key parts of question that will help retrieval
+   - discard structural parts (wh-word, ?, etc)
+   - forumlate as tf-idf query, using unigrams or bigrams
+   - identify entities and prioritise match
+ - May reformulate question using templates
+   - e.g. "Where is Federation Square located?"
+     - query = "Federation Square located"
+ - Predict expected answer type (here = LOCATION)
+**** Answer Types
+- Find a concise answer to the question, as a span in the text.
+** Feature-Based Answer Extraction
+ - Frame it as a classification problem
