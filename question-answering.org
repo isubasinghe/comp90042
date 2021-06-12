@@ -25,3 +25,9 @@
 - Find a concise answer to the question, as a span in the text.
 ** Feature-Based Answer Extraction
  - Frame it as a classification problem
+ - Classify whether a candidate answer contains an answer
+ - Various features based on match to question,
+   expected entity type match, specific answer patterns.
+** Neural Answer Extraction
+- Use a neural network to extract answer
+- AKA *reading comprehension* task

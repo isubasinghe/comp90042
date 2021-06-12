@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-05-07 Fri 13:57 -->
+<!-- 2021-06-12 Sat 19:21 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Natural Language Processing</title>
@@ -215,6 +215,28 @@
     /*]]>*///-->
 // @license-end
 </script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
@@ -223,66 +245,210 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org79dfe82">1. Text Processing</a></li>
-<li><a href="#orgdd2fd1e">2. N-gram Language Models</a></li>
-<li><a href="#orgc92da81">3. Text Classification</a></li>
-<li><a href="#org8c9093a">4. Part of Speech Tagging</a></li>
-<li><a href="#orga0608c1">5. Sequence Tagging: Hidden Markov Models</a></li>
-<li><a href="#org0d58ed0">6. Deep Learning Feedforward Networks</a></li>
-<li><a href="#org28cb233">7. Deep Learning Recurrent Networks</a></li>
-<li><a href="#org7508c21">8. Lexical Semantics</a></li>
-<li><a href="#orga291559">9. Distributional Semantics</a></li>
-<li><a href="#org11e7022">10. Question Answering</a>
+<li><a href="#org136c1d2">1. Text Processing</a>
 <ul>
-<li><a href="#orgc1d34e9">10.1. 2 key approaches</a></li>
-<li><a href="#org1c5afbb">10.2. IR based QA</a>
+<li><a href="#orga314db3">1.1. Words</a></li>
+<li><a href="#org8a4bdeb">1.2. Sentence</a></li>
+<li><a href="#org812e680">1.3. Document</a></li>
+<li><a href="#orgd58349d">1.4. Corpus</a></li>
+<li><a href="#org10a2d0f">1.5. Word Token</a></li>
+<li><a href="#org0cf515c">1.6. Word type</a></li>
+<li><a href="#org319c828">1.7. Why preprocess?</a></li>
+<li><a href="#org7549d75">1.8. Preprocessing steps:</a></li>
+<li><a href="#org6f1a0b4">1.9. Sentence segmentation</a>
 <ul>
-<li><a href="#orgf14500f">10.2.1. IR-based Factoid QA: TREC-QA</a></li>
+<li><a href="#org4aecc38">1.9.1. Binary Classifier</a></li>
 </ul>
 </li>
-<li><a href="#org3159688">10.3. Feature-Based Answer Extraction</a></li>
+<li><a href="#orga144543">1.10. Word Tokenisation</a></li>
+<li><a href="#org5ea237f">1.11. Subword tokenisation</a></li>
+<li><a href="#orgfa82174">1.12. Word Normalisation</a></li>
 </ul>
 </li>
-<li><a href="#orgd609f9a">11. Topic Modelling</a></li>
+<li><a href="#org17ade06">2. N-gram Language Models</a></li>
+<li><a href="#orgf558ab1">3. Text Classification</a></li>
+<li><a href="#orgd29be8c">4. Part of Speech Tagging</a></li>
+<li><a href="#orgc07cb36">5. Sequence Tagging: Hidden Markov Models</a></li>
+<li><a href="#org7cc4100">6. Deep Learning Feedforward Networks</a></li>
+<li><a href="#org5e35ad5">7. Deep Learning Recurrent Networks</a></li>
+<li><a href="#orgb959eba">8. Lexical Semantics</a></li>
+<li><a href="#org7edab54">9. Distributional Semantics</a></li>
+<li><a href="#org4de5bf2">10. Question Answering</a>
+<ul>
+<li><a href="#orgfe011b9">10.1. 2 key approaches</a></li>
+<li><a href="#org85a66f0">10.2. IR based QA</a>
+<ul>
+<li><a href="#org8fa2810">10.2.1. IR-based Factoid QA: TREC-QA</a></li>
+</ul>
+</li>
+<li><a href="#org652851b">10.3. Feature-Based Answer Extraction</a></li>
+<li><a href="#org79bb1fe">10.4. Neural Answer Extraction</a></li>
+</ul>
+</li>
+<li><a href="#org09f1c5c">11. Topic Modelling</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org79dfe82" class="outline-2">
-<h2 id="org79dfe82"><span class="section-number-2">1</span> Text Processing</h2>
+<div id="outline-container-org136c1d2" class="outline-2">
+<h2 id="org136c1d2"><span class="section-number-2">1</span> Text Processing</h2>
+<div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-orgdd2fd1e" class="outline-2">
-<h2 id="orgdd2fd1e"><span class="section-number-2">2</span> N-gram Language Models</h2>
+<div id="outline-container-orga314db3" class="outline-3">
+<h3 id="orga314db3"><span class="section-number-3">1.1</span> Words</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Sequence of characters with meaning and/or function
+</p>
 </div>
-<div id="outline-container-orgc92da81" class="outline-2">
-<h2 id="orgc92da81"><span class="section-number-2">3</span> Text Classification</h2>
 </div>
-<div id="outline-container-org8c9093a" class="outline-2">
-<h2 id="org8c9093a"><span class="section-number-2">4</span> Part of Speech Tagging</h2>
+<div id="outline-container-org8a4bdeb" class="outline-3">
+<h3 id="org8a4bdeb"><span class="section-number-3">1.2</span> Sentence</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+Sequence of words with meaning and/or function
+</p>
 </div>
-<div id="outline-container-orga0608c1" class="outline-2">
-<h2 id="orga0608c1"><span class="section-number-2">5</span> Sequence Tagging: Hidden Markov Models</h2>
 </div>
-<div id="outline-container-org0d58ed0" class="outline-2">
-<h2 id="org0d58ed0"><span class="section-number-2">6</span> Deep Learning Feedforward Networks</h2>
+<div id="outline-container-org812e680" class="outline-3">
+<h3 id="org812e680"><span class="section-number-3">1.3</span> Document</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+One or more sentences
+</p>
 </div>
-<div id="outline-container-org28cb233" class="outline-2">
-<h2 id="org28cb233"><span class="section-number-2">7</span> Deep Learning Recurrent Networks</h2>
 </div>
-<div id="outline-container-org7508c21" class="outline-2">
-<h2 id="org7508c21"><span class="section-number-2">8</span> Lexical Semantics</h2>
+<div id="outline-container-orgd58349d" class="outline-3">
+<h3 id="orgd58349d"><span class="section-number-3">1.4</span> Corpus</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+Collection of documents
+</p>
 </div>
-<div id="outline-container-orga291559" class="outline-2">
-<h2 id="orga291559"><span class="section-number-2">9</span> Distributional Semantics</h2>
 </div>
-<div id="outline-container-org11e7022" class="outline-2">
-<h2 id="org11e7022"><span class="section-number-2">10</span> Question Answering</h2>
+<div id="outline-container-org10a2d0f" class="outline-3">
+<h3 id="org10a2d0f"><span class="section-number-3">1.5</span> Word Token</h3>
+<div class="outline-text-3" id="text-1-5">
+<p>
+Each instance of a word
+</p>
+</div>
+</div>
+<div id="outline-container-org0cf515c" class="outline-3">
+<h3 id="org0cf515c"><span class="section-number-3">1.6</span> Word type</h3>
+<div class="outline-text-3" id="text-1-6">
+<p>
+Distinct words
+</p>
+</div>
+</div>
+<div id="outline-container-org319c828" class="outline-3">
+<h3 id="org319c828"><span class="section-number-3">1.7</span> Why preprocess?</h3>
+<div class="outline-text-3" id="text-1-7">
+<ul class="org-ul">
+<li>Most NLP applications have documents as inputs</li>
+<li><b><b>key point:</b></b> Language is <b><b>compositional.</b></b> As humans, we can break these documents
+into individual components. To understand language, a computer should do the same.</li>
+<li><b><b>Preprocessing</b></b> is the first step</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org7549d75" class="outline-3">
+<h3 id="org7549d75"><span class="section-number-3">1.8</span> Preprocessing steps:</h3>
+<div class="outline-text-3" id="text-1-8">
+<ol class="org-ol">
+<li>Remove unwanted formatting</li>
+<li><b><b>Sentence segmentation:</b></b> break documents into sentences</li>
+<li><b><b>Word tokenisation:</b></b> break sentences into words</li>
+<li><b><b>Word normalisation:</b></b> transform words into canonical forms</li>
+<li><b><b>Stopword removal:</b></b> remove unwanted words</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org6f1a0b4" class="outline-3">
+<h3 id="org6f1a0b4"><span class="section-number-3">1.9</span> Sentence segmentation</h3>
+<div class="outline-text-3" id="text-1-9">
+<ul class="org-ul">
+<li>Naive approach: break on punctuation</li>
+<li>Use Regex to capture capital</li>
+<li>Have lexicons</li>
+<li>State of the art uses machine learning</li>
+</ul>
+</div>
+<div id="outline-container-org4aecc38" class="outline-4">
+<h4 id="org4aecc38"><span class="section-number-4">1.9.1</span> Binary Classifier</h4>
+<div class="outline-text-4" id="text-1-9-1">
+<ul class="org-ul">
+<li>Looks at every &rsquo;.&rsquo; and decides if it is the end of a sentence.</li>
+<li>Features: word shapes(uppercase, lowercase, numbers, ALL<sub>CAPS</sub>), words before and after &rsquo;.&rsquo;, part of speech tags</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-orga144543" class="outline-3">
+<h3 id="orga144543"><span class="section-number-3">1.10</span> Word Tokenisation</h3>
+<div class="outline-text-3" id="text-1-10">
+<ul class="org-ul">
+<li>Naive approach: seperate out alphanumeric strings (\w+)</li>
+<li>Some asian languages are written without spaces, we need MaxMatch algorithm here where we greedily match longest word in vocab</li>
+<li>Some languages such as German require compound splitter</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org5ea237f" class="outline-3">
+<h3 id="org5ea237f"><span class="section-number-3">1.11</span> Subword tokenisation</h3>
+<div class="outline-text-3" id="text-1-11">
+<ul class="org-ul">
+<li>Colourless green ideas -&gt; [colour] [less] [green] [idea] [s]</li>
+<li>One popular algorithm: byte-pair encoding (BPE)</li>
+<li>Core idea: iteratively merge frequent pair of characters</li>
+<li>Advantage:
+<ul class="org-ul">
+<li>Data-informed tokenisation</li>
+<li>Works for different languages</li>
+<li>Deals better with unknown words</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgfa82174" class="outline-3">
+<h3 id="orgfa82174"><span class="section-number-3">1.12</span> Word Normalisation</h3>
+</div>
+</div>
+<div id="outline-container-org17ade06" class="outline-2">
+<h2 id="org17ade06"><span class="section-number-2">2</span> N-gram Language Models</h2>
+</div>
+<div id="outline-container-orgf558ab1" class="outline-2">
+<h2 id="orgf558ab1"><span class="section-number-2">3</span> Text Classification</h2>
+</div>
+<div id="outline-container-orgd29be8c" class="outline-2">
+<h2 id="orgd29be8c"><span class="section-number-2">4</span> Part of Speech Tagging</h2>
+</div>
+<div id="outline-container-orgc07cb36" class="outline-2">
+<h2 id="orgc07cb36"><span class="section-number-2">5</span> Sequence Tagging: Hidden Markov Models</h2>
+</div>
+<div id="outline-container-org7cc4100" class="outline-2">
+<h2 id="org7cc4100"><span class="section-number-2">6</span> Deep Learning Feedforward Networks</h2>
+</div>
+<div id="outline-container-org5e35ad5" class="outline-2">
+<h2 id="org5e35ad5"><span class="section-number-2">7</span> Deep Learning Recurrent Networks</h2>
+</div>
+<div id="outline-container-orgb959eba" class="outline-2">
+<h2 id="orgb959eba"><span class="section-number-2">8</span> Lexical Semantics</h2>
+</div>
+<div id="outline-container-org7edab54" class="outline-2">
+<h2 id="org7edab54"><span class="section-number-2">9</span> Distributional Semantics</h2>
+</div>
+<div id="outline-container-org4de5bf2" class="outline-2">
+<h2 id="org4de5bf2"><span class="section-number-2">10</span> Question Answering</h2>
 <div class="outline-text-2" id="text-10">
 <p>
 <b>Definition:</b> question answering (&ldquo;QA&rdquo;) is the task of automatically determinging the answer for a natural language question.
 </p>
 </div>
-<div id="outline-container-orgc1d34e9" class="outline-3">
-<h3 id="orgc1d34e9"><span class="section-number-3">10.1</span> 2 key approaches</h3>
+<div id="outline-container-orgfe011b9" class="outline-3">
+<h3 id="orgfe011b9"><span class="section-number-3">10.1</span> 2 key approaches</h3>
 <div class="outline-text-3" id="text-10-1">
 <ul class="org-ul">
 <li>Information Retrieval based QA
@@ -298,12 +464,12 @@
 </ul>
 </div>
 </div>
-<div id="outline-container-org1c5afbb" class="outline-3">
-<h3 id="org1c5afbb"><span class="section-number-3">10.2</span> IR based QA</h3>
+<div id="outline-container-org85a66f0" class="outline-3">
+<h3 id="org85a66f0"><span class="section-number-3">10.2</span> IR based QA</h3>
 <div class="outline-text-3" id="text-10-2">
 </div>
-<div id="outline-container-orgf14500f" class="outline-4">
-<h4 id="orgf14500f"><span class="section-number-4">10.2.1</span> IR-based Factoid QA: TREC-QA</h4>
+<div id="outline-container-org8fa2810" class="outline-4">
+<h4 id="org8fa2810"><span class="section-number-4">10.2.1</span> IR-based Factoid QA: TREC-QA</h4>
 <div class="outline-text-4" id="text-10-2-1">
 <ol class="org-ol">
 <li>Use question to make a query for the IR engine.</li>
@@ -312,7 +478,7 @@
 </ol>
 </div>
 <ol class="org-ol">
-<li><a id="org5156545"></a>Question Processing<br />
+<li><a id="org7cc7a1d"></a>Question Processing<br />
 <div class="outline-text-5" id="text-10-2-1-1">
 <ul class="org-ul">
 <li>Find key parts of question that will help retrieval
@@ -332,7 +498,7 @@
 </ul>
 </div>
 </li>
-<li><a id="org08f52ce"></a>Answer Types<br />
+<li><a id="org677ae11"></a>Answer Types<br />
 <div class="outline-text-5" id="text-10-2-1-2">
 <ul class="org-ul">
 <li>Find a concise answer to the question, as a span in the text.</li>
@@ -342,22 +508,34 @@
 </ol>
 </div>
 </div>
-<div id="outline-container-org3159688" class="outline-3">
-<h3 id="org3159688"><span class="section-number-3">10.3</span> Feature-Based Answer Extraction</h3>
+<div id="outline-container-org652851b" class="outline-3">
+<h3 id="org652851b"><span class="section-number-3">10.3</span> Feature-Based Answer Extraction</h3>
 <div class="outline-text-3" id="text-10-3">
 <ul class="org-ul">
 <li>Frame it as a classification problem</li>
+<li>Classify whether a candidate answer contains an answer</li>
+<li>Various features based on match to question,
+expected entity type match, specific answer patterns.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org79bb1fe" class="outline-3">
+<h3 id="org79bb1fe"><span class="section-number-3">10.4</span> Neural Answer Extraction</h3>
+<div class="outline-text-3" id="text-10-4">
+<ul class="org-ul">
+<li>Use a neural network to extract answer</li>
+<li>AKA <b>reading comprehension</b> task</li>
 </ul>
 </div>
 </div>
 </div>
-<div id="outline-container-orgd609f9a" class="outline-2">
-<h2 id="orgd609f9a"><span class="section-number-2">11</span> Topic Modelling</h2>
+<div id="outline-container-org09f1c5c" class="outline-2">
+<h2 id="org09f1c5c"><span class="section-number-2">11</span> Topic Modelling</h2>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Isitha Subasinghe</p>
-<p class="date">Created: 2021-05-07 Fri 13:57</p>
+<p class="date">Created: 2021-06-12 Sat 19:21</p>
 </div>
 </body>
 </html>
