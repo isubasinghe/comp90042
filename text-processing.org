@@ -1,1 +1,48 @@
 * Text Processing
+
+** Words
+Sequence of characters with meaning and/or function
+** Sentence
+Sequence of words with meaning and/or function
+** Document
+One or more sentences
+** Corpus
+Collection of documents
+** Word Token
+Each instance of a word
+** Word type
+Distinct words
+** Why preprocess?
+- Most NLP applications have documents as inputs
+- **key point:** Language is **compositional.** As humans, we can break these documents
+  into individual components. To understand language, a computer should do the same.
+- **Preprocessing** is the first step
+** Preprocessing steps:
+1) Remove unwanted formatting
+2) **Sentence segmentation:** break documents into sentences
+3) **Word tokenisation:** break sentences into words
+4) **Word normalisation:** transform words into canonical forms
+5) **Stopword removal:** remove unwanted words
+
+** Sentence segmentation
+- Naive approach: break on punctuation
+- Use Regex to capture capital
+- Have lexicons
+- State of the art uses machine learning
+*** Binary Classifier
+- Looks at every '.' and decides if it is the end of a sentence.
+- Features: word shapes(uppercase, lowercase, numbers, ALL_CAPS), words before and after '.', part of speech tags
+** Word Tokenisation
+ - Naive approach: seperate out alphanumeric strings (\w+)
+ - Some asian languages are written without spaces, we need MaxMatch algorithm here where we greedily match longest word in vocab
+ - Some languages such as German require compound splitter
+
+** Subword tokenisation
+- Colourless green ideas -> [colour] [less] [green] [idea] [s]
+- One popular algorithm: byte-pair encoding (BPE)
+- Core idea: iteratively merge frequent pair of characters
+- Advantage:
+  - Data-informed tokenisation
+  - Works for different languages
+  - Deals better with unknown words
+** Word Normalisation
