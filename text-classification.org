@@ -1,1 +1,121 @@
 * Text Classification
+- Input:
+  - A document d
+  - A fixed output set of classes $C$
+- Output:
+  - A predicted class $c \in C$
+- Text Classification Tasks
+  - Topic Classification
+  - Sentiment analysis
+  - Native language identification
+  - Natural language inference
+  - Automatic fact-checking
+  - Paraphrase
+** Building a Text Classifier
+- Identify a task of interest
+- Collect an appropriate corpus
+- Carry out annotation
+- Select features
+- Choose machine learning algorithm
+- Train model and tune hyperparameters using held-out development data
+- Repeat earlier steps as needed
+- Train final model
+- Evaluate final model on held-out test data
+
+** Choosing a classification algorithm
+- Bias vs Variance
+  - Bias: assumptions we made in our model
+  - Variance: sensitivity to training set
+- Underlying assumptions, e.g. independance
+- Complexity
+- Speed
+
+** Naive Bayes
+Finds the class with highest likelihood under Bayes law
+- Naively assumes features are independent
+- Pros:
+  - Fast to train and classify
+  - Robust, low variance
+  - optimal classifier if independence assumption is correct
+  - extremely simple to implement
+- Cons:
+  - Independence assumption rarely holds
+  - Low accuracy compared to similar methods in most situations
+  - Smoothing required for unseen class/feature combinations
+** Logistic Regression
+- A classifer despite its name
+- A linear model, but uses softmax "squashing" to get valid probabilty
+- Pros:
+  - Not confounded by diverse correlated features -> better performance
+- Cons:
+  - Slow to train
+  - Feature scaling needed
+  - Requires a lot of data to work well in practice
+  - Choosing regularisation strategy is important since overfitting is a big problem
+
+** Support Vector Machines
+Finds a hyperplane which seperates the training data with maximum margin
+- Pros:
+  - Fast to train
+  - Can do non-linearity with kernel trick
+  - Works well with huge feature sets
+- Cons:
+  - Multiclass awkward
+  - Feature scaling needed
+  - Deals poorly with class imbalances
+  - Interpretability
+** K-Nearest Neighbour
+ Classify based on majority class of k-nearest neighbours
+ - Pros:
+   - simple but effective
+   - No training required
+   - Inherently multiclass
+   - Optimal classifer with infinite data
+ - Cons:
+   - Have to select k
+   - Issues with imbalanced classes
+   - Often slow
+   - Features must be selected carefully
+** Decision Tree
+ - Pros:
+   - Fast to build and test
+   - Feature scaling irrelevant
+   - Good for small feature sets
+   - Handles non-linearly seperable problems
+ - Cons:
+   - In practice not that interpretable
+   - highly redundant subtrees
+   - Not competitive for large feature sets
+** Random forests
+Consists of a forest of decision trees trained on subsets of training and feature spaces.
+Majority vote determines class
+- Pros:
+  - More accurate and more robust than decision trees
+  - Great classifier for medium feature sets
+  - Training easily parallelised
+- Cons:
+  - Intepretability
+  - Slow with large feature sets
+
+** Neural Networks
+- Pros:
+  - Extrmely powerful
+  - Little feature engineering
+- Cons:
+  - Not off the shelf
+  - Many hyper params, difficult to optimise
+  - Slow to train
+  - Prone to overfitting
+** Evaluation
+*** Accuracy
+correct classifications/ total classifications
+*** Precision & Recall
+Hold one class as "positive class"
+Precision = correct classifications of B (TP) / total classifications of B (TP + FP)
+Recall = correct classifications of B (TP) / total instances of B (TP + FN)
+*** F(1) score
+- Harmonic mean of precision and recall
+$F1 = \frac{2*precision*recall}{precision+recall}$
+- Can be used as a multiclass metric
+  - Macroaveraged: Average F1 score across classes
+  - Microaveraged: Calculate F1 score using sum of counts

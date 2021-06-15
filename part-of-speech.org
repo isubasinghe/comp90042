@@ -1,1 +1,136 @@
 * Part of Speech Tagging
+- AKA word classes, morphological classes, syntatic categories
+- Nouns, verbs, adjectives, etc.
+- POS tells us quite a bit about a word and its neighbours
+  - Nouns are often preceded by determiners
+  - Verbs preceded by nouns
+  - Content as a **noun** pronounced as CONtent
+  - Content as an **adjective** pronounced as conTENT
+
+** Information Extraction
+ - Given this "Brasila, the Brazilian capital, was founded in 1960."
+ - Obtain this:
+   - capital(Brazil, Brasilia)
+   - founded(Brasilia, 1960)
+ - Many steps involved but first need to know **nouns**, **adjectives**, **verbs** and **numbers**
+** POS Open Classes
+ **Open** vs **Closed** classes: how readily do POS categories take on new words? Just a few open classes:
+ - Nouns:
+   - Proper (Australia) vs Common (Wombat)
+   - Mass (rice) vs count (bowls)
+ - Verbs:
+   - Rich inflection (go/goes/going/gone/went)
+   - Auxiliary words (be, have, do)
+   - Transitivity
+ - Adjectives:
+   - Gradable (happy) vs non-gradeable (computational)
+ - Adverbs:
+   - Manner (slowly)
+   - Locative (here)
+   - Degree (really)
+   - Temporal (today)
+** POS Closed Classes
+- Prepositions (in, on, with, for, of, over)
+  - **on** the table
+- Particles
+  - brushed himself **off**
+- Determiners
+  - Articles (a, an, the)
+  - Demonstratives (this, that, these, those)
+  - Quantifiers (each, every, some, two)
+- Pronouns
+  - Personal (I, me, she)
+  - Possessive (my, our)
+  - Interrogative or Wh (who, what)
+- Conjunction
+  - Coordinating (and, or, but)
+  - Subordinating (if, although, that)
+- Modal verbs:
+  - Ability (can, could)
+  - Persmission (can, may)
+  - Possibility (may, might, could will)
+  - Necessity (must)
+
+** Ambiguity
+ - Many word types belong to multiple classes
+ - POS depends on context
+ - Compare:
+   - Time flies like an arrow
+   - Fruit flies like a banana
+
+** Tagsets
+ A compact representation of POS information
+ - Usually <= 4 capatilized characters (e.g. NN = noun)
+*** Major Penn Treebank Tags
+ - NN = noun
+ - JJ = adjective
+ - VB = verb
+ - RB = adverb
+ - DT = determiner
+ - IN = preposition
+ - MD = modal
+ - RP = particle
+ - TO = to
+ - CD = cardinal number
+ - PRP = personal pronoun
+ - CC = coordinating conjuction
+ - WH = wh-pronoun
+
+** Derived Tags (Open Class)
+ - NN
+   - NNS (plural, wombats)
+   - NNP (proper, Australia)
+   - NNPS (proper plural, Australians)
+- VB(verb infinitive, eat)
+  - VBP (1st/2nd person present, eat)
+  - VBZ (3rd person singular, eats)
+  - VBD (past tense, ate)
+  - VBG (gerund, eating)
+  - VBN (past participle, eaten)
+- JJ (adjective, nice)
+  - JJR(comparative, nicer)
+  - JJS(superlative, nicest)
+- RB(adverb, fast)
+  - RBR(comparitive, faster)
+  - RBS(superlative, fastest)
+
+
+** Derived Tags (Closed Class)
+- PRP (pronouns personal, I)
+  - PRP$ (possessive, my)
+- WP(Wh-pronoun, what)
+  - WP$(possessive, whose)
+  - WDT(wh-determiner,which)
+  - WRB(wh-adverb,where)
+
+** Automatic Taggers
+- Rule based taggers
+- Statistical taggers
+  - Unigram tagger
+  - Classifier based taggers
+  - Hidden Markov Model (HMM) taggers
+*** Rule based taggers
+- Typically starts with a list of possible tags for each word
+- Often includes other lexical information, e.g. verb subcategorisation
+- Apply rules to narrow down to a single tag
+- Large systems have 1000s of constraints
+*** Unigram taggers
+- Assign most common tag to each word type
+- Requires a corpus of tagged words
+- "Model" is just a look up table
+- But actually quite good, ~90% accuracy
+- Often considered the baseline
+*** Classifier based tagging
+- Use a standard discriminative classifier with features
+- But can suffer from error propagation: wrong predictions from previous steps affect the next ones
+
+*** Hidden Markov Models
+- A basic (or structured) model
+- Like sequential classifiers, use both previous tag and lexical evidence
+- Unlike classifiers, considers all possibilities of previous tag
+- Unlike classifiers, treat previous tag evidence and lexical evidence as independent from each other
+
+** Unknown Words
+- Huge problem in morphologically rich languages (Turkish)
+- Can use things we've seen only once to best guess for things we've never seen before
+- Can use subword representations to capture morphology

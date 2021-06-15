@@ -1,1 +1,25 @@
 * Sequence Tagging: Hidden Markov Models
+Tagging is a sentence level task but as humans we decompose it into small word level tasks
+Solution: define a model that decomposes process into individual word level steps
+- This is the idea of **sequence labelling**, and more general, **structured prediction**.
+** A probabilistic model
+- $\hat{t} = argmax_t P(t|w)$
+- $\hat{t} = argmax_t \frac{P(w|t)P(t)}{P(w)}$
+- Lets decompose:
+  - $P(w|t) = \prod_{i=1}^{n} P(w_i|t_i)$
+  - $P(w) = \prod_{i=1}^{n} P(t_i, t_{i-1})$
+- HMMs - Training
+  - Parameters are the individual probabilities
+    - $P(w_i|t_i)$ = emission (O) probabilities
+    - $P(t_i|t_{i-1})$ = transition (A) probabilities
+  - Training uses Maximum Likelihood Estimation
+    This is done by simply counting word frequencies according to their tags (just like n-gram LMs)
+    - $P(like|VB) = \frac{count(VB, like)}{count(VB)}$
+    - $P(NN|DT) = \frac{count(DT, NN)}{count(DT)}$
+    - What about the first tag? Assume we have a symbol "STARTSYMBOL"
+    - What about unseen (word, tag) and (tag, previous_tag) combos?
+      - $P(NN | STARTSYMBOL) = \frac{count(STARTSYMBOL, NN)}{count(STARTSYMBOL)}$
+      - Smoothing techniques
+** The Viterbi Algorithm
+- Complexity $O(T^2 * N)$, where T is the size of the tagset and N is the length of the sequence. T*N matrix
+- Why does it work? Because of the **independence** assumption that decomposes the problem.
