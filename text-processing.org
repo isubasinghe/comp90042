@@ -46,3 +46,62 @@ Distinct words
   - Works for different languages
   - Deals better with unknown words
 ** Word Normalisation
+- Lower casing
+- Removing morphology (cooking -> cook)
+- Correcting spelling
+- Expanding Abbreviations
+- Goal:
+  - Reduce vocabulary
+  - Maps words into the same type
+** Inflectional Morphology
+- Inflectional morphology creates grammatical variants
+- English inflects nouns, verbs and adjectives
+- Many languages have much richer inflectional morphology
+** Lemmatisation
+- Lemmatisation means removing any inflection to reach the uninflected form, the lemma
+- In English, there are irregularities that prevent a trivial solution:
+  - poked -> poke
+  - stopping -> stop
+  - watches -> watch
+** Derivation morphology
+- Derivation morphology creates distinct words
+- English derivational suffixes often change the lexical category
+- English derivational prefixes often change the meaning without changing the lexical category
+  - write -> rewrite
+  - healthy -> unhealthy
+** Stemming
+- Stemming strips off all suffixes, leaving a stem
+- automate, automatic -> automat
+- Even less lexical sparsity than lemmatisation
+- Popular in information retrieval
+- Stem not always interpretable
+** Porter Stemmer
+- Word has three forms
+  - CVCV...C
+  - CVCV...V
+  - VCVC...C
+  - VCVC...V
+  Which can be represented as:
+  - [C]VCVC...[V]
+  - [C](VC)^m[V]
+  - m = **measure**
+** Fix Spelling Errors
+- Why fix them?
+  - Spelling errors create new, rare types
+  - Disrupt various kinds of analysis
+  - Very common in internet corpus
+  - In web search, particularly important in queries
+- How?
+  - String distance
+  - Modelling of error types (phonetic, typing, etc)
+  - Use an n-gram language model
+** Other word normalisation
+ - Normalise spelling variations
+ - Expanding abbreviations
+
+** Stopword Removal
+- Definition: a list of words to be removed from the document
+  - Typical in BOW representations
+- How to chose them?
+  - All closed-class or function words
+  - Any high frequency words
