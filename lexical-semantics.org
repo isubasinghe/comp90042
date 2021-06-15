@@ -1,1 +1,18 @@
 * Lexical Semantics
+**Synonym:** near identical meaning
+**Antonymy:** opposite meaning
+**Hypernymy:** is-a relation
+**Meronymy:** part-whole relation
+** WordNet
+- A database of lexical relations
+** Synsets
+- Nodes of WordNet are not words or lemmas, but senses
+- They are represented by sets of synonyms
+** Word Sense Disambiguation
+- Task: selects the correct sense for words in a sentence
+*** Supervised WSD
+- Apply standard ML classifiers
+- Feature vectors typically words and syntax around target
+- Requires tagged corpora
+*** Unsupervised: Lesk
+- Choose sense whose WordNet gloss overlaps most with the context

@@ -1,1 +1,46 @@
 * Distributional Semantics
+Lexical Database - Problems
+Manually Constructed:
+- Expensive
+- Human annotation can be biased and noisy
+Language is dynamic
+** Distributional hypothesis
+- You shall know a word by the company it keeps
+- Document co-occurrence indicative of topic (**document** as context)
+- Local context reflects its meaning (**word window** as context)
+Guessing meaning from context
+*** Count Based methods
+- Use document as context
+- Use neighbouring words as context
+*** Document as Context: The Vector Space Model
+Core idea: represent word meaning as a vector
+Consider documents as context
+One matrix, two viewpoints
+**** Dimensionality Reduction
+- Term-document matrices are very **sparse**
+- Dimensionality reduction: create shorter, denser vectors
+- More practical (less features)
+- Remove noise (less overfitting)
+**** Singular Value Decompisition
+Truncating U, Sigma and V to k dimensions produces best possible k rank approximation of original matrix
+Typical values for k are 100-5000
+**** Pointwise Mutual Information
+- For two events x and y, PMI computes the discrepancy between:
+  - Their joint distribution = P(x, y)
+  - Their individual distributions (assuming independence) = P(x)P(y)
+$PMI(x, y) = log_2(\frac{P(x,y)}{P(x)P(y)})$
+PMI does a better job of capturing semantics
+But very biased towards rare word pairs
+And doesn't handle zeros well
+***** PMI Tricks
+- Zero all negative values (Positive PMI)
+- Counter bias towards rare events
+  - Normalised PMI $\frac{PMI(x,y)}{-log_2(P(x, y))}$
+*** Neural Methods
+Word Embeddings
+**** Word2Vec
+Core idea: You shall know a word by the company it keeps
+Predict a word using context words
+- Framed as learning a classifier
+  - **Skip-gram:** predict surrounding words of target word
+  - **CBOW:** predict target word using surrounding words
