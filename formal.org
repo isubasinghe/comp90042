@@ -1,0 +1,8 @@
+* Formal Language Theory
+** CYK Algorithm
+- Bottom-up parsing
+- Requirement: CFGs must be in **Chomsky Normal Form**
+- Convert to Chomsky Normal Form:
+  All rules form:
+  - A -> B C
+  - A -> a

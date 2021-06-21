@@ -1,0 +1,72 @@
+* Dependency Grammar
+- Dependency grammar offers a simpler approach
+  - describe relations between pairs of words
+  - namely between heads and dependents
+** Basics of dependency grammar
+- Captures the grammartical relation between:
+  **Head** = central word
+  **Dependent** = supporting word
+- Grammartical relation = subject, direct object, etc
+- **Universal dependency:** a framework to create a set of dependency relations that are computationally useful and **cross-lingual**
+*** Question answering
+- Dependency tree more directly represents the core of the sentence: **who did what to whom**
+*** Information Extraction
+- Dependency grammar captures relations succintly
+** Dependency vs Constituency
+- Dependency Tree
+  - each node is a word token
+  - one node is chosen as the root
+  - directed edges link heads and their dependents
+- Constituency Tree
+  - forms a hierarchical tree
+  - word tokens are the leaves
+  - internal nodes are 'constituent phrases' e.g. NLP
+** Properties of a dependency tree
+- Each word has a single head (parent)
+- There is a single root node
+- There is a unique path to each word from the root
+- All arcs should be **projective**
+** Projectivity
+- An arc is projective if there is a path from head to every word that lies between the head and the dependent.
+- Dependency tree is projective if all arcs are projective
+- In other words, a dependecy tree is projective if it can be drawn with no **crossing edges**
+** Transition based parsing
+*** Dependency Parsing
+- Find the best structure for a given input sequence
+- Two main approaches:
+  - **Transition-based:** bottom up greedy method
+  - **Graph based:** encodes problem using nodes/edges and use graph theory methods to find optimal solutions
+*** Caveat
+- Transition based parsers can only handle **projective** dependency trees
+- Less applicable for languages where cross dependencies are common
+*** Intuition
+- Process words from left to right
+- Maintain two data structures:
+  - **Buffer:** input words yet to be processed
+  - **Stack:** store words that are being processed
+- At each step, perform one of the three actions
+  - **Shift:** move a word from buffer to stack
+  - **Left-Arc:** assign current word as head of the previous word in stack
+  - **Right-Arc:** assign previous word as head of current word in stack
+** Parsing as Classification
+- Input:
+  - Stack
+  - Buffer
+- Output:
+  - 3 classes
+- Features:
+  - word (w), part of speech (t)
+*** Classifiers
+- Traditionally SVM works best
+- Nowadays, deep learning is state of the art
+- Weakness: local classifier based on greedy search
+- Solutions:
+  - Beam search
+  - Dynamic Oracle
+  - Graph based parser
+** Graph based parsing
+- Given an input sequence, construct a fully connected, weighted, directed graph
+- *Vertices:* all words
+- **Edges:** head-dependent arcs
+- **Weight:** score based on training data
+- **Objective:** find the maximum spanning tree

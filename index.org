@@ -9,5 +9,9 @@
 #+INCLUDE: deep-learning-rnn.org
 #+INCLUDE: lexical-semantics.org
 #+INCLUDE: distributional-semantics.org
+#+INCLUDE: discourse.org
+#+INCLUDE: formal.org
+#+INCLUDE: dependency-grammar.org
+#+INCLUDE: information-extraction.org
 #+INCLUDE: question-answering.org
 #+INCLUDE: topic-modelling.org
