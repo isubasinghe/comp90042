@@ -1,0 +1,89 @@
+* Discourse
+- Most tasks/models we learned operate at word or sentence level
+- But NLP often deals with documents
+- **Discourse:** understanding how sentences relate to each other
+** Discourse segmentation
+- A document can be viewed as a sequence of segments
+- A segment: a span of cohesive text
+- Cohesion: organised around a **topic** or **function**
+*** Unsupervised Approaches
+- TextTiling Algorithm: looking for points of low lexical cohesion between sentences
+- For each sentence gap:
+  - Create two BOW vectors consisting of words from k sentences on either side of the gap
+  - Use cosine to get the similarity score
+  - For gap i, calculate a depth score, insert boundaries when depth is greater than some threshold t:
+    $depth(gap_i) = (sim_{i-1} - sim_i) = (sim_{i+1} - sim_i)$
+*** Supervised Approaches
+- Get labelled data from easy sources
+- Apply binary classifier to identify boundaries
+- Or use sequential classifiers
+- Potentially include classification of section types (introduction, conclusion, etc)
+- Integrate a wider range of features
+** Discourse parsing
+- Identify **discourse units**, and the **relations** that hold between them
+- **Rhetorical Structure Theory** is a framework to do hierarchical analysis of discourse structure in documents
+*** Discourse Units
+- Typically clauses of sentence
+- DUs do not cross sentence boundary
+- 2 merged DUs = another composite DU
+*** Discourse Relations
+- **Relations** between DUs:
+  - Conjuction, justify, concession, elaboration, etc
+**** Nucleus vs Satellite
+- Within a discourse unit, one argument is the **nucleus** (the primary argument)
+- The supporting argument is the **satellite**
+- Some relations are equal (e.g. conjuction) and so both arguments are nuclei
+**** RST Tree
+- An RST relation combines two or more DUs into composite DUs
+- Process of combining DUs is repeated creating an RST Tree
+**** RST Parsing
+- Task: given a document, recover the RST Tree
+  - Rule-based parsing
+  - Bottom-up approach
+  - Top-down approach
+**** Parsing using discourse markers
+- Some discourse markers (cue phrases) explicitly indicate relations
+- Can be used to build a simple rule based parser
+**** Parsing using Machine Learning
+- RST Discourse Treebank
+- Basic idea:
+  - Segment document into DUs
+  - Combine adjacent DUs into composite DUs iteratively to create the full RST tree (bottom up parsing)
+**** Bottom up Parsing
+- Transition based parsing
+- CYK/chart parsing algorithm
+  - Global, but some constraints prevent CYK from finding globally optimal tree for discourse parsing
+**** Top down parsing
+- Segment documents into DUs
+- Decide a boundary to split
+- For each segment, repeat step 2
+**** Discourse Parsing Features
+- Bag of words
+- Discourse markers
+- Starting/ending n-grams
+- Location in the text
+- Syntax features
+- Lexical and distributional similarities
+** Anaphora resolution
+*** Anaphors
+- **Anaphors:** linguistic expressions that refer back to earlier elements in the text
+- Anaphors have a **antecedent** in the discourse, often but not always a noun phrase
+*** Motivation
+- Essential for deep semantic analysis
+  - Very useful for QA, e.g. reading comprehension
+*** Antecedent Restrictions
+- Pronouns must agree in number with their antecedents
+- Pronouns must agree in gender
+- Pronouns whose antecedents are the subject of the same syntactic clause must be reflexive
+*** Antecedent Preferences
+- Should be recent
+- Should be salient, as determined by grammatical position
+*** Centering Theory
+- A unified account of relationships between discourse structure and entity reference
+- Every utterance in the discourse is characterized by a set of entities known as **centers**
+- Explains preference of certain entities for ambigious pronouns
+*** Supervised Anaphor Resolution
+- Build a binary classifier for anaphor/antecedent pairs
+- Convert restrictions and preferences into features
+- With enough data, can approximate the centering algorithm
+- But also easy to include features that are potentially helpful

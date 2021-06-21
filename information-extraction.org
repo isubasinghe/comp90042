@@ -1,0 +1,31 @@
+* Information Extraction
+- Named Entity Recognition (NER): **sequence** models such as RNNs, HMMs or CRFs
+- Relation Extraction: mostly **classifiers**, either binary or multi-class
+- This lecture: how to frame these two tasks in order to apply sequence labellers and classifiers
+** Named Entity Recognition
+*** Typical Entity Tags
+- PER: people, characters
+- ORG: companies
+- LOC: regions
+- GPE: countries, states
+- FAC: bridges, buildings, airports
+- VEH: planes,cars
+*** NER as sequence labelling
+- NE tags can be ambigious
+- Washington can be a person, location, or political entity
+- Similar problem when doing POS tagging
+- Can we use a sequence tagger for this? (e.g. HMM)
+  - No entities can spawn multiple tokens
+  - Solution: modify the tag set
+*** State of the Art
+- Uses LSTMs with character and word embeddings
+** Relation Extraction
+- Traditionally framed as triple extraction:
+  - unit(American Airlines, AMR Corp) -> subsidiary
+  - spokesman(Tim Wagner, American Airlines) -> employment
+*** Methods
+- If we have access to a fixed relation database:
+  - Rule based
+  - Supervised
+  - Semi-supervised
+  - Distant supervision

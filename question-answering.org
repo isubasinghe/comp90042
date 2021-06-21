@@ -23,6 +23,14 @@
  - Predict expected answer type (here = LOCATION)
 **** Answer Types
 - Find a concise answer to the question, as a span in the text.
+**** Retrieval
+- Find top n documents matching query
+- Next find passages (paragraphs or sentences) in these documents (also driven by IR)
+- Should contain:
+  - many instances of the question keywords
+  - several named entities of the answer type
+  - close proximity of these terms in the passage
+  - high ranking by IR engine
 ** Feature-Based Answer Extraction
  - Frame it as a classification problem
  - Classify whether a candidate answer contains an answer
@@ -31,3 +39,15 @@
 ** Neural Answer Extraction
 - Use a neural network to extract answer
 - AKA *reading comprehension* task
+** Knowledge based QA
+- Many large knowledge bases
+- Semantic parsing
+  - Convert questions into logical forms to query KB directly
+    - Predicate calculus
+    - Programming query (e.g. SQL)
+  - How to build a semantic parser?
+    - Text to text problem:
+      - Input = natural language sentence
+      - Output = string in logical form
+** Hybrid Methods
+- Why not use both text based and knowledge based QA
